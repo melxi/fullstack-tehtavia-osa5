@@ -4,6 +4,9 @@ import blogService from './services/blogs'
 
 import BlogForm from './components/BlogForm'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
+
+import './App.css'
 
 function App() {
   const [blogs, setBlogs] = useState([])
@@ -13,6 +16,7 @@ function App() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
   
   useEffect(() => {
     blogService
@@ -45,7 +49,10 @@ function App() {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.log(exception)
+      setErrorMessage({message: 'wrong username or password', success: false})
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -66,6 +73,10 @@ function App() {
       .create(blogObject)
       .then(data => {
         setBlogs(blogs.concat(data))
+        setErrorMessage({message: `a new blog ${data.title} by ${data.author} added`, success: true})
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
         setTitle('')
         setAuthor('')
         setUrl('')
@@ -76,6 +87,7 @@ function App() {
     return (
       <div>
         <h1>log in to application</h1>
+        <Notification notification={errorMessage} />
         <form onSubmit={handleLogin}>
           <div>
             <label htmlFor="username">username</label>
@@ -105,6 +117,7 @@ function App() {
     return (
       <div>
         <h2>blogs</h2>
+        <Notification notification={errorMessage} />
         <p>{user.name} logged in<button onClick={handleLogout}>logout</button></p>
         <BlogForm 
           title={title}

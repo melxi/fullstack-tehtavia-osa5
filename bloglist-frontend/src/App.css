@@ -1,0 +1,19 @@
+.notification {
+    margin: 10px 0;
+    padding: 10px;
+    background: gray;
+    border: 2px solid green;
+    border-radius: 4px;
+    color: green;
+    font-size: 22px;
+}
+
+.error {
+    margin: 10px 0;
+    padding: 10px;
+    background: gray;
+    border: 2px solid red;
+    border-radius: 4px;
+    color: red;
+    font-size: 22px;
+}
