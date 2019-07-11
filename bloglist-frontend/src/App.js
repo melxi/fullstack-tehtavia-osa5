@@ -1,14 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import loginService from './services/login';
-import blogService from './services/blogs';
+import React, {useState, useEffect} from 'react'
+import loginService from './services/login'
+import blogService from './services/blogs'
 
-import Blog from './components/Blog';
+import BlogForm from './components/BlogForm'
+import Blog from './components/Blog'
 
 function App() {
-  const [blogs, setBlogs] = useState([]);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
+  const [blogs, setBlogs] = useState([])
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
   
   useEffect(() => {
     blogService
@@ -18,15 +22,15 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser');
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
     }
   }, [])
 
   const handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
       const user = await loginService.login({
         username, password
@@ -35,10 +39,11 @@ function App() {
       window.localStorage.setItem(
         'loggedBlogAppUser', JSON.stringify(user)
       )
-  
-      setUser(user);
-      setUsername('');
-      setPassword('');
+
+      blogService.setToken(user.token)
+      setUser(user)
+      setUsername('')
+      setPassword('')
     } catch (exception) {
       console.log(exception)
     }
@@ -47,6 +52,24 @@ function App() {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogAppUser')
     setUser(null)
+  }
+
+  const addBlog = event => {
+    event.preventDefault()
+    const blogObject = {
+      title,
+      author,
+      url
+    }
+    
+    blogService
+      .create(blogObject)
+      .then(data => {
+        setBlogs(blogs.concat(data))
+        setTitle('')
+        setAuthor('')
+        setUrl('')
+      })
   }
 
   if (user === null) {
@@ -77,12 +100,21 @@ function App() {
           <button type="submit">login</button>
         </form>
       </div>
-    );
+    )
   } else {
     return (
       <div>
         <h2>blogs</h2>
         <p>{user.name} logged in<button onClick={handleLogout}>logout</button></p>
+        <BlogForm 
+          title={title}
+          setTitle={setTitle}
+          author={author}
+          setAuthor={setAuthor}
+          url={url}
+          setUrl={setUrl}
+          addBlog={addBlog}
+        />
         {blogs.map(blog => 
           <Blog key={blog.id} blog={blog}/>
         )}
@@ -91,4 +123,4 @@ function App() {
   }
 }
 
-export default App;
+export default App
