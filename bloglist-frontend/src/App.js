@@ -5,6 +5,7 @@ import blogService from './services/blogs'
 import BlogForm from './components/BlogForm'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 
 import './App.css'
 
@@ -44,6 +45,11 @@ function App() {
         'loggedBlogAppUser', JSON.stringify(user)
       )
 
+      setErrorMessage({message: `${user.username} successfully logged in`, success: true})
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -79,7 +85,20 @@ function App() {
         }, 5000)
         setTitle('')
         setAuthor('')
-        setUrl('')
+        setUrl('')        
+      })
+      .catch(exception => {
+        if (exception.toString().includes('401')) {
+          setErrorMessage({message: 'You are not authorized to perform this operation', success: false})
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        } else {
+          setErrorMessage({message: 'Failed to add a new blog', success: false})
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        }
       })
   }
 
@@ -119,15 +138,17 @@ function App() {
         <h2>blogs</h2>
         <Notification notification={errorMessage} />
         <p>{user.name} logged in<button onClick={handleLogout}>logout</button></p>
-        <BlogForm 
-          title={title}
-          setTitle={setTitle}
-          author={author}
-          setAuthor={setAuthor}
-          url={url}
-          setUrl={setUrl}
-          addBlog={addBlog}
-        />
+        <Togglable buttonLabel="new note">
+          <BlogForm 
+            title={title}
+            setTitle={setTitle}
+            author={author}
+            setAuthor={setAuthor}
+            url={url}
+            setUrl={setUrl}
+            addBlog={addBlog}
+          />
+        </Togglable>
         {blogs.map(blog => 
           <Blog key={blog.id} blog={blog}/>
         )}
