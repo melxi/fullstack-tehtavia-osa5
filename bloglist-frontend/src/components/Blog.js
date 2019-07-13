@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-const Blog = ({ blog, likeBlog }) => {
+const Blog = ({ blog, likeBlog, removeBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -8,7 +8,6 @@ const Blog = ({ blog, likeBlog }) => {
     marginBottom: 5
   }
   const [showAll, setShowAll] = useState(false)
-  
   return (
     <div style={blogStyle}>
       <div onClick={(event) => setShowAll(!showAll)}>
@@ -20,7 +19,11 @@ const Blog = ({ blog, likeBlog }) => {
                 event.stopPropagation()
                 likeBlog(blog.id)
               }}>like</button><br />
-              added by {blog.user ? blog.user.name : ''}
+              added by {blog.user ? blog.user.name : ''}<br />
+              <button onClick={(event) => {
+                event.stopPropagation()
+                removeBlog(blog.id)
+              }}>remove</button>
             </div> 
           : <div>{blog.title} {blog.author}</div>}
       </div>

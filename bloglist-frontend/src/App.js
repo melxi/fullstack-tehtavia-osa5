@@ -114,6 +114,19 @@ function App() {
       })
   }
 
+  const removeBlog = id => {
+    const blog = blogs.find(blog => blog.id === id)
+    const confirmRemoval = window.confirm(`remove blog ${blog.title} ${blog.author}`)
+
+    if (confirmRemoval) {
+      blogService
+        .remove(id)
+        .then(returnedBlog => {
+          setBlogs(blogs.filter(blog => blog.id !== id))
+      })
+    }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -162,7 +175,7 @@ function App() {
           />
         </Togglable>
         {blogs.sort((a, b) => b.likes - a.likes).map(blog => 
-          <Blog key={blog.id} blog={blog} likeBlog={likeBlog}/>
+          <Blog key={blog.id} blog={blog} likeBlog={likeBlog} removeBlog={removeBlog} />
         )}
       </div>
     )
