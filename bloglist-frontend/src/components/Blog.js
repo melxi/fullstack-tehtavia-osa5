@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-const Blog = ({ blog }) => {
+const Blog = ({ blog, likeBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -11,12 +11,15 @@ const Blog = ({ blog }) => {
   
   return (
     <div style={blogStyle}>
-      <div onClick={() => setShowAll(!showAll)}>
+      <div onClick={(event) => setShowAll(!showAll)}>
         {showAll 
           ? <div>
               {blog.title} {blog.author}<br />
-              <a href={blog.url}>{blog.url}</a><br />
-              {blog.likes} likes<button>like</button><br />
+              <a href={blog.url} target="_blank" rel="noopener noreferrer" onClick={(event) => event.stopPropagation()}>{blog.url}</a><br />
+              {blog.likes} likes<button onClick={(event) => {
+                event.stopPropagation()
+                likeBlog(blog.id)
+              }}>like</button><br />
               added by {blog.user ? blog.user.name : ''}
             </div> 
           : <div>{blog.title} {blog.author}</div>}
