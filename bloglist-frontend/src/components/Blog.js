@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 const Blog = ({ blog, likeBlog, removeBlog, user }) => {
   const blogStyle = {
     paddingTop: 10,
@@ -22,18 +22,18 @@ const Blog = ({ blog, likeBlog, removeBlog, user }) => {
   }
   return (
     <div style={blogStyle}>
-      <div onClick={(event) => setShowAll(!showAll)}>
-        {showAll 
+      <div onClick={() => setShowAll(!showAll)}>
+        {showAll
           ? <div>
-              {blog.title} {blog.author}<br />
-              <a href={blog.url} target="_blank" rel="noopener noreferrer" onClick={(event) => event.stopPropagation()}>{blog.url}</a><br />
-              {blog.likes} likes<button onClick={(event) => {
-                event.stopPropagation()
-                likeBlog(blog.id)
-              }}>like</button><br />
+            {blog.title} {blog.author}<br />
+            <a href={blog.url} target="_blank" rel="noopener noreferrer" onClick={(event) => event.stopPropagation()}>{blog.url}</a><br />
+            {blog.likes} likes<button onClick={(event) => {
+              event.stopPropagation()
+              likeBlog(blog.id)
+            }}>like</button><br />
               added by {blog.user ? blog.user.name : ''}<br />
-              {removeButton()}
-            </div> 
+            {removeButton()}
+          </div>
           : <div>{blog.title} {blog.author}</div>}
       </div>
     </div>

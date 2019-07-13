@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState,useEffect } from 'react'
 import loginService from './services/login'
 import blogService from './services/blogs'
 
@@ -18,7 +18,7 @@ function App() {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  
+
   useEffect(() => {
     blogService
       .getAll().then(initialBlogs => {
@@ -46,7 +46,7 @@ function App() {
         'loggedBlogAppUser', JSON.stringify(user)
       )
 
-      setErrorMessage({message: `${user.username} successfully logged in`, success: true})
+      setErrorMessage({ message: `${user.username} successfully logged in`, success: true })
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -56,7 +56,7 @@ function App() {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage({message: 'wrong username or password', success: false})
+      setErrorMessage({ message: 'wrong username or password', success: false })
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -75,37 +75,37 @@ function App() {
       author,
       url
     }
-    
+
     blogService
       .create(blogObject)
       .then(data => {
         setBlogs(blogs.concat(data))
-        setErrorMessage({message: `a new blog ${data.title} by ${data.author} added`, success: true})
+        setErrorMessage({ message: `a new blog ${data.title} by ${data.author} added`, success: true })
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
         setTitle('')
         setAuthor('')
-        setUrl('')        
+        setUrl('')
       })
       .catch(exception => {
         if (exception.toString().includes('401')) {
-          setErrorMessage({message: 'You are not authorized to perform this operation', success: false})
+          setErrorMessage({ message: 'You are not authorized to perform this operation', success: false })
           setTimeout(() => {
             setErrorMessage(null)
           }, 5000)
         } else {
-          setErrorMessage({message: 'Failed to add a new blog', success: false})
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
+          setErrorMessage({ message: 'Failed to add a new blog', success: false })
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         }
       })
   }
 
   const likeBlog = id => {
     const blog = blogs.find(blog => blog.id === id)
-    const likedBlog = {...blog, likes: blog.likes + 1}
+    const likedBlog = { ...blog, likes: blog.likes + 1 }
 
     blogService
       .update(id, likedBlog)
@@ -121,9 +121,9 @@ function App() {
     if (confirmRemoval) {
       blogService
         .remove(id)
-        .then(returnedBlog => {
+        .then(() => {
           setBlogs(blogs.filter(blog => blog.id !== id))
-      })
+        })
     }
   }
 
@@ -135,23 +135,23 @@ function App() {
         <form onSubmit={handleLogin}>
           <div>
             <label htmlFor="username">username</label>
-            <input 
-              id="username" 
-              type="text" 
-              value={username} 
-              name="username" 
-              onChange={({target}) => setUsername(target.value)} 
+            <input
+              id="username"
+              type="text"
+              value={username}
+              name="username"
+              onChange={({ target }) => setUsername(target.value)}
             />
           </div>
           <div>
             <label htmlFor="password">password</label>
-            <input 
-            id="password" 
-            type="password" 
-            value={password} 
-            name="password"
-            onChange={({target}) => setPassword(target.value)} 
-          />
+            <input
+              id="password"
+              type="password"
+              value={password}
+              name="password"
+              onChange={({ target }) => setPassword(target.value)}
+            />
           </div>
           <button type="submit">login</button>
         </form>
@@ -164,7 +164,7 @@ function App() {
         <Notification notification={errorMessage} />
         <p>{user.name} logged in<button onClick={handleLogout}>logout</button></p>
         <Togglable buttonLabel="new note">
-          <BlogForm 
+          <BlogForm
             title={title}
             setTitle={setTitle}
             author={author}
@@ -174,7 +174,7 @@ function App() {
             addBlog={addBlog}
           />
         </Togglable>
-        {blogs.sort((a, b) => b.likes - a.likes).map(blog => 
+        {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
           <Blog key={blog.id} blog={blog} likeBlog={likeBlog} removeBlog={removeBlog} user={user}/>
         )}
       </div>
