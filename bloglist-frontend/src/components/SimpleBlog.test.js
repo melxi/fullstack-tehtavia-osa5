@@ -28,21 +28,21 @@ test('renders blogs title, author and likes', () => {
 })
 
 test('clicking the button twice calls event handler twice', () => {
-	const blog = {
-		title: 'React-sovellusten testaaminen',
-		author: 'Matti Luukkainen',
-		likes: 99
-	}
+  const blog = {
+    title: 'React-sovellusten testaaminen',
+    author: 'Matti Luukkainen',
+    likes: 99
+  }
 
-	const mockHandler = jest.fn()
+  const mockHandler = jest.fn()
 
-	const { getByText } = render(
-		<SimpleBlog blog={blog} onClick={mockHandler} />
-	)
+  const { getByText } = render(
+    <SimpleBlog blog={blog} onClick={mockHandler} />
+  )
 
-	const button = getByText('like')
-	fireEvent.click(button)
-	fireEvent.click(button)
+  const button = getByText('like')
+  fireEvent.click(button)
+  fireEvent.click(button)
 
-	expect(mockHandler.mock.calls.length).toBe(2)
+  expect(mockHandler.mock.calls.length).toBe(2)
 })

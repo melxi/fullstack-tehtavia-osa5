@@ -22,12 +22,13 @@ const Blog = ({ blog, likeBlog, removeBlog, user }) => {
   }
   return (
     <div style={blogStyle}>
-      <div onClick={() => setShowAll(!showAll)}>
+      <div data-testid="container" onClick={() => setShowAll(!showAll)}>
         {showAll
           ? <div>
             {blog.title} {blog.author}<br />
             <a href={blog.url} target="_blank" rel="noopener noreferrer" onClick={(event) => event.stopPropagation()}>{blog.url}</a><br />
-            {blog.likes} likes<button onClick={(event) => {
+            {blog.likes} likes
+            <button onClick={(event) => {
               event.stopPropagation()
               likeBlog(blog.id)
             }}>like</button><br />
