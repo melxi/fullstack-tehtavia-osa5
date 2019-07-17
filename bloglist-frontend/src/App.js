@@ -13,9 +13,9 @@ import './App.css'
 
 function App() {
   const [blogs, setBlogs] = useState([])
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const title  = useField('text')
+  const author = useField('text')
+  const url = useField('text')
   const username = useField('text')
   const password = useField('password')
   const [user, setUser] = useState(null)
@@ -56,6 +56,8 @@ function App() {
 
       blogService.setToken(user.token)
       setUser(user)
+      username.reset()
+      password.reset()
     } catch (exception) {
       setErrorMessage({ message: 'wrong username or password', success: false })
       setTimeout(() => {
@@ -72,9 +74,9 @@ function App() {
   const addBlog = event => {
     event.preventDefault()
     const blogObject = {
-      title,
-      author,
-      url
+      title: title.value,
+      author: author.value,
+      url: url.value
     }
 
     blogService
@@ -85,9 +87,9 @@ function App() {
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
-        setTitle('')
-        setAuthor('')
-        setUrl('')
+        title.reset('')
+        author.reset('')
+        url.reset('')
       })
       .catch(exception => {
         if (exception.toString().includes('401')) {
@@ -155,11 +157,8 @@ function App() {
         <Togglable buttonLabel="new note">
           <BlogForm
             title={title}
-            setTitle={setTitle}
             author={author}
-            setAuthor={setAuthor}
             url={url}
-            setUrl={setUrl}
             addBlog={addBlog}
           />
         </Togglable>
