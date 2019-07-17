@@ -21,7 +21,7 @@ const Blog = ({ blog, likeBlog, removeBlog, user }) => {
     }
   }
   return (
-    <div style={blogStyle}>
+    <div className="blog" style={blogStyle}>
       <div data-testid="container" onClick={() => setShowAll(!showAll)}>
         {showAll
           ? <div>
