@@ -7,6 +7,8 @@ import Blog from './components/Blog'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 
+import { useField } from './hooks'
+
 import './App.css'
 
 function App() {
@@ -14,8 +16,8 @@ function App() {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const username = useField('text')
+  const password = useField('password')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
@@ -39,7 +41,8 @@ function App() {
     event.preventDefault()
     try {
       const user = await loginService.login({
-        username, password
+        username: username.value,
+        password: password.value
       })
 
       window.localStorage.setItem(
@@ -53,8 +56,6 @@ function App() {
 
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
     } catch (exception) {
       setErrorMessage({ message: 'wrong username or password', success: false })
       setTimeout(() => {
@@ -135,23 +136,11 @@ function App() {
         <form onSubmit={handleLogin}>
           <div>
             <label htmlFor="username">username</label>
-            <input
-              id="username"
-              type="text"
-              value={username}
-              name="username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
+            <input {...username}/>
           </div>
           <div>
             <label htmlFor="password">password</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              name="password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
+            <input {...password}/>
           </div>
           <button type="submit">login</button>
         </form>
