@@ -138,11 +138,11 @@ function App() {
         <form onSubmit={handleLogin}>
           <div>
             <label htmlFor="username">username</label>
-            <input {...username}/>
+            <input {...username.omitreset}/>
           </div>
           <div>
             <label htmlFor="password">password</label>
-            <input {...password}/>
+            <input {...password.omitreset}/>
           </div>
           <button type="submit">login</button>
         </form>

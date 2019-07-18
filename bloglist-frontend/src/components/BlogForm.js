@@ -10,15 +10,15 @@ const BlogForm = props => {
       <form onSubmit={addBlog}>
         <div>
           <label htmlFor="title">title:</label>
-          <input {...title}/>
+          <input {...title.omitreset}/>
         </div>
         <div>
           <label htmlFor="author">author:</label>
-          <input {...author}/>
+          <input {...author.omitreset}/>
         </div>
         <div>
           <label htmlFor="url">url:</label>
-          <input {...url}/>
+          <input {...url.omitreset}/>
         </div>
         <button type="submit">create</button>
       </form>
