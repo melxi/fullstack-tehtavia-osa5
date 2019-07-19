@@ -1,0 +1,77 @@
+{
+  "notes": [
+    {
+      "content": "custom-hooks are awesome!",
+      "id": 1
+    },
+    {
+      "content": "best feature ever <3",
+      "id": 2
+    },
+    {
+      "content": "hello",
+      "id": 3
+    },
+    {
+      "content": "hello",
+      "id": 4
+    },
+    {
+      "content": "hello",
+      "id": 5
+    },
+    {
+      "content": "hello",
+      "id": 6
+    },
+    {
+      "content": "hello",
+      "id": 7
+    },
+    {
+      "content": "hello",
+      "id": 8
+    },
+    {
+      "content": "react",
+      "id": 9
+    },
+    {
+      "content": "hello",
+      "id": 10
+    },
+    {
+      "content": "why",
+      "id": 11
+    },
+    {
+      "content": "new note",
+      "id": 12
+    },
+    {
+      "content": "new",
+      "id": 13
+    },
+    {
+      "content": "word",
+      "id": 14
+    }
+  ],
+  "persons": [
+    {
+      "name": "mluukkai",
+      "number": "040-5483923",
+      "id": 1
+    },
+    {
+      "name": "melxi",
+      "number": "044-0240486",
+      "id": 2
+    },
+    {
+      "name": "mhmd",
+      "number": "8937-1045779",
+      "id": 3
+    }
+  ]
+}
